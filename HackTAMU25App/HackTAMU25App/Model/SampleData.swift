@@ -105,22 +105,25 @@ class SampleData {
             title: "Budgeting",
             subtitle: "Personal Finance",
             prompt: "Create a basic monthly budget. Identify areas to save and reduce expenses.",
-            imageURL: nil,
-            category: .finance
+            imageURL: "https://static.vecteezy.com/system/resources/previews/041/031/266/non_2x/money-revenue-icon-in-comic-style-dollar-coin-cartoon-illustration-on-isolated-background-finance-structure-splash-effect-business-concept-vector.jpg",
+            category: .finance,
+            recommended: true
         ),
         Topic(
             title: "Investing Basics",
             subtitle: "Stocks and Bonds",
             prompt: "Compare different investment vehicles. Highlight risk vs. reward factors.",
-            imageURL: nil,
-            category: .finance
+            imageURL: "https://www.honeyheap.com/images/article1_image.jpg",
+            category: .finance,
+            recommended: true
         ),
         Topic(
             title: "Retirement Planning",
             subtitle: "Long-term Saving",
             prompt: "Explore strategies for retirement accounts. Focus on compound interest.",
-            imageURL: nil,
-            category: .finance
+            imageURL: "https://img.freepik.com/free-vector/retirement-plan-concept-illustration_114360-21616.jpg",
+            category: .finance,
+            recommended: true
         ),
         Topic(
             title: "Cryptocurrency",
