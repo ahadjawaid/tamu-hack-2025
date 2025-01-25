@@ -7,16 +7,26 @@
 
 import SwiftUI
 
+enum Tab: String {
+    case home = "Home"
+    case library = "Library"
+}
+
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
+    @State private var selectedTab: Tab = .home
+   
+   var body: some View {
+       NavigationStack {
+           Header(selectedTab)
+           
+           ScrollView {
+               
+           }
+           
+           
+       }
+       .padding()
+   }
 }
 
 #Preview {
