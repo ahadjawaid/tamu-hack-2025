@@ -19,8 +19,9 @@ final class Topic {
     var subtitle: String
     var prompt: String
     var imageURL: Optional<String>
-    var userAdded: Bool
     var category: Category
+    var userAdded: Bool
+    var recommended: Bool
     
     enum Category: String, CaseIterable, Identifiable, Codable {
         case biology = "Biology"
@@ -61,15 +62,17 @@ final class Topic {
         subtitle: String = "",
         prompt: String = "",
         imageURL: Optional<String>,
+        category: Category = .unknown,
         userAdded: Bool = false,
-        category: Category = .unknown
+        recommended: Bool = false
     ) {
         self.title = title
         self.subtitle = subtitle
         self.prompt = prompt
         self.imageURL = imageURL
-        self.userAdded = userAdded
         self.category = category
+        self.userAdded = userAdded
+        self.recommended = recommended
     }
 }
 
