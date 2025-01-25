@@ -6,25 +6,24 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
-    @Environment()
+    @Query(filter: #Predicate<Topic> { topic in
+        topic.recommended == true
+    }) private var recommendedTopics: [Topic]
+
+    
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                Text(categoryName)
+                Text("Top picks for you")
                     .font(.headline)
-                    .padding(.leading, 15.0)
-                    .padding(.top, 5)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: 0.0) {
-                        ForEach(landmarks) { landmark in
-                            NavigationLink {
-                                LandmarkDetail(landmark: landmark)
-                            } label: {
-                                CategoryItem(landmark: landmark)
-                            }
+                        ForEach(recommendedTopics) { topic in
+                            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
                         }
                     }
                 }

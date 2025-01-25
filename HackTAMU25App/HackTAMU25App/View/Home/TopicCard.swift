@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct TopicCard: View {
+    let topic: Topic
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    TopicCard()
+    TopicCard(topic: SampleData.shared.topic)
 }
