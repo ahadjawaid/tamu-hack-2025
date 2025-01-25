@@ -8,10 +8,47 @@
 import Foundation
 import SwiftData
 
+struct CategoryData {
+    let name: String
+    let icon: String
+}
+
 enum Category: String, CaseIterable, Identifiable {
+    case biology = "Biology"
+    case finance = "Finance"
+    case health = "Health"
+    case business = "Business"
+    case history = "History"
+    case technology = "Technology"
+    case mathematics = "Mathematics"
+    case artAndDesign = "Art & Design"
+    case psychology = "Psychology"
+    case environmentalScience = "Environmental Science"
+    case food = "Food"
     case unknown = ""
-    
+
     var id: String { rawValue }
+
+    var icon: String {
+        switch self {
+            case .biology: return "allergens"
+            case .finance: return "dollarsign.circle"
+            case .health: return "heart"
+            case .business: return "cart"
+            case .history: return "pencil.and.scribble"
+            case .technology: return "cable.coaxial"
+            case .mathematics: return "numbers.rectangle"
+            case .artAndDesign: return "paintbrush.pointed"
+            case .psychology: return "brain.filled.head.profile"
+            case .environmentalScience: return "tree"
+            case .food: return "carrot"
+            case .unknown" return ""
+        }
+    }
+
+    var data: CategoryData {
+        CategoryData(name: rawValue, icon: icon)
+    }
 }
 
 @Model
