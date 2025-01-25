@@ -16,7 +16,7 @@ struct HackTAMU25AppApp: App {
         WindowGroup {
             ContentView()
         }
-//        .modelContainer(SampleData.shared.modelContainer)
+        .modelContainer(SampleData.shared.modelContainer)
     }
 }
 
