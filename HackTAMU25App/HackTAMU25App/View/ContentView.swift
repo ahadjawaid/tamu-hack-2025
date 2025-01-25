@@ -23,7 +23,7 @@ struct ContentView: View {
                
            }
            
-           
+           Navigation(selectedTab: $selectedTab)
        }
        .padding()
    }
