@@ -20,7 +20,7 @@ struct ContentView: View {
            Header(selectedTab)
            
            ScrollView {
-               
+               HomeView()
            }
            
            Navigation(selectedTab: $selectedTab)
