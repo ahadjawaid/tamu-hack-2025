@@ -18,7 +18,6 @@ struct Header: View {
     var body: some View {
         HStack {
             Text(tab.rawValue)
-                .foregroundStyle(.primary)
             
             Spacer()
             
