@@ -1,0 +1,64 @@
+{
+    "id": "1579239a-9af6-4066-a82a-9e7b358762d5",
+    "clips": [
+        {
+            "id": "7d607817-e466-4572-8596-72009358ea87",
+            "video_url": "",
+            "audio_url": "",
+            "major_model_version": "v2",
+            "model_name": "chirp-v2-xxl-alpha",
+            "metadata": {
+                "prompt": "Pop ballad about summertime",
+                "type": "gen",
+                "stream": true
+            },
+            "is_liked": false,
+            "user_id": "a389eff5-125a-43bf-98d6-e2b0326127c4",
+            "display_name": "RevolutionaryLosslessAudio9571",
+            "handle": "revolutionarylosslessaudio9571",
+            "is_handle_updated": false,
+            "avatar_image_url": "https://cdn1.suno.ai/defaultBlue.webp",
+            "is_trashed": false,
+            "created_at": "2025-01-26T11:57:31.454Z",
+            "status": "submitted",
+            "title": "",
+            "play_count": 0,
+            "upvote_count": 0,
+            "is_public": false
+        },
+        {
+            "id": "0573ea11-3177-4ff8-926f-cd8d2a2e85cc",
+            "video_url": "",
+            "audio_url": "",
+            "major_model_version": "v2",
+            "model_name": "chirp-v2-xxl-alpha",
+            "metadata": {
+                "prompt": "Pop ballad about summertime",
+                "type": "gen",
+                "stream": true
+            },
+            "is_liked": false,
+            "user_id": "a389eff5-125a-43bf-98d6-e2b0326127c4",
+            "display_name": "RevolutionaryLosslessAudio9571",
+            "handle": "revolutionarylosslessaudio9571",
+            "is_handle_updated": false,
+            "avatar_image_url": "https://cdn1.suno.ai/defaultBlue.webp",
+            "is_trashed": false,
+            "created_at": "2025-01-26T11:57:31.454Z",
+            "status": "submitted",
+            "title": "",
+            "play_count": 0,
+            "upvote_count": 0,
+            "is_public": false
+        }
+    ],
+    "metadata": {
+        "prompt": "Pop ballad about summertime",
+        "type": "gen",
+        "stream": true
+    },
+    "major_model_version": "v2",
+    "status": "complete",
+    "created_at": "2025-01-26T11:57:31.429Z",
+    "batch_size": 1
+}
