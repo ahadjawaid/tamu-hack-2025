@@ -17,7 +17,7 @@ struct HomeView: View {
         ScrollView {
             VStack {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Top picks for you")
+                    Text("Top Picks For You")
                         .font(.title2)
                         .fontWeight(.bold)
                     
@@ -25,6 +25,21 @@ struct HomeView: View {
                         HStack(alignment: .top, spacing: 20) {
                             ForEach(recommendedTopics) { topic in
                                 TopicCard(topic: topic)
+                            }
+                        }
+                        .padding(.bottom, 8)
+                    }
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("Popular Categories")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .top, spacing: 20) {
+                            ForEach(CategoryType.allCases.filter { $0 != .unknown }) { category in
+                                CategoryCard(category: category)
                             }
                         }
                         .padding(.bottom, 8)
