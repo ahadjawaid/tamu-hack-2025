@@ -13,7 +13,7 @@ struct MusicItem: View {
     
     var body: some View {
         Button(action: {
-            // Add your playback action here
+            displayPlayer.toggle()
         }) {
             HStack(spacing: 16) {
                 // Icon with background
@@ -54,5 +54,9 @@ struct MusicItem: View {
             PlayerView(topic: topic)
         }
     }
+}
+
+#Preview {
+    MusicItem(topic: SampleData.shared.topic)
 }
 

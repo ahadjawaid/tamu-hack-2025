@@ -21,12 +21,8 @@ struct Header: View {
             
             Spacer()
             
-            NavigationLink {
-                ProfileView()
-            } label: {
-                Image(systemName: "person.crop.circle.fill")
-                    .foregroundStyle(.accent)
-            }
+            Image(systemName: "person.crop.circle.fill")
+                .foregroundStyle(.accent)
         }
         .font(.largeTitle.bold())
     }

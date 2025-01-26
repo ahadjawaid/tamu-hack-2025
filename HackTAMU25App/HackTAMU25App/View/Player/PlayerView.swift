@@ -3,14 +3,6 @@ import SwiftData
 import AVFoundation
 import SplineRuntime
 
-struct SplineViewModifier: ViewModifier {
-    let color: Color
-    
-    func body(content: Content) -> some View {
-        content
-            .background(color)
-    }
-}
 
 private let apiDomain = "localhost:8000"
 
@@ -24,8 +16,8 @@ struct PlayerView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
-                if playerManager.isLoading {
-                    Text("Loadding...")
+                if topic.audioURL == nil {
+                    LoadingView()
                 } else {
                     let url = URL(string: "https://build.spline.design/uYSazCziM6sbgc5gcgRC/scene.splineswift")!
                     ZStack(alignment: .bottomTrailing) {
@@ -103,9 +95,8 @@ struct PlayerView: View {
             if topic.audioURL == nil {
                 do {
                     let response = try await makeAPICall(prompt: topic.prompt)
-                    print("response", response)
-                    
-                    
+                    topic.audioURL = response.first
+                    playerManager.setupAudio(urlString: topic.audioURL!)
                 } catch {
                     print("Error generating song: \(error.localizedDescription)")
                 }
@@ -123,13 +114,145 @@ struct PlayerView: View {
     }
 }
 
+struct LoadingView: View {
+    @State private var isAnimating = false
+    
+    private var spinnerAnimation: some View {
+        Circle()
+            .trim(from: 0, to: 0.7)
+            .stroke(
+                LinearGradient(
+                    gradient: .init(colors: [.orange.opacity(0.8), .yellow.opacity(0.6)]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                ),
+                style: .init(lineWidth: 4, lineCap: .round)
+            )
+            .frame(width: 60, height: 60)
+            .rotationEffect(.degrees(isAnimating ? 360 : 0))
+            .animation(
+                .linear(duration: 1)
+                .repeatForever(autoreverses: false),
+                value: isAnimating
+            )
+    }
+    
+    private var loadingText: some View {
+        VStack(spacing: 4) {
+            Text("Generating Your Song")
+                .font(.system(.title2, weight: .medium))
+                .foregroundStyle(.primary)
+            
+            Text("This may take a moment...")
+                .font(.system(.subheadline))
+                .foregroundStyle(.secondary.opacity(0.8))
+        }
+    }
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            spinnerAnimation
+            loadingText
+        }
+        .padding(.vertical, 32)
+        .padding(.horizontal, 24)
+        .background(Color(.systemBackground).opacity(0.95))
+        .onAppear { isAnimating = true }
+    }
+}
+
 struct RequestBody: Encodable {
     let prompt: String
 }
 
-func makeAPICall(prompt: String) async throws -> Data {
+struct Response: Codable {
+    struct Inner: Codable {
+        struct Data: Codable {
+            let id: String
+            let clips: [Clip]
+            let metadata: Metadata
+            let majorModelVersion: String
+            let status: String
+            let createdAt: String
+            let batchSize: Int
+            
+            enum CodingKeys: String, CodingKey {
+                case id
+                case clips
+                case metadata
+                case majorModelVersion = "major_model_version"
+                case status
+                case createdAt = "created_at"
+                case batchSize = "batch_size"
+            }
+        }
+        
+        let response: Data
+        let audioUrls: [String]
+        let downloadedFiles: [String]
+        
+        enum CodingKeys: String, CodingKey {
+            case response
+            case audioUrls = "audio_urls"
+            case downloadedFiles = "downloaded_files"
+        }
+    }
+    
+    let response: Inner
+}
+
+struct Clip: Codable {
+    let id: String
+    let videoUrl: String
+    let audioUrl: String
+    let majorModelVersion: String
+    let modelName: String
+    let metadata: Metadata
+    let isLiked: Bool
+    let userId: String
+    let displayName: String
+    let handle: String
+    let isHandleUpdated: Bool
+    let avatarImageUrl: String
+    let isTrashed: Bool
+    let createdAt: String
+    let status: String
+    let title: String
+    let playCount: Int
+    let upvoteCount: Int
+    let isPublic: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case videoUrl = "video_url"
+        case audioUrl = "audio_url"
+        case majorModelVersion = "major_model_version"
+        case modelName = "model_name"
+        case metadata
+        case isLiked = "is_liked"
+        case userId = "user_id"
+        case displayName = "display_name"
+        case handle
+        case isHandleUpdated = "is_handle_updated"
+        case avatarImageUrl = "avatar_image_url"
+        case isTrashed = "is_trashed"
+        case createdAt = "created_at"
+        case status
+        case title
+        case playCount = "play_count"
+        case upvoteCount = "upvote_count"
+        case isPublic = "is_public"
+    }
+}
+
+struct Metadata: Codable {
+    let prompt: String
+    let type: String
+    let stream: Bool
+}
+
+func makeAPICall(prompt: String) async throws -> [String] {
     let url = URL(string: "http://127.0.0.1:8000/generate")!
-    print("URL:", url)
     
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
@@ -137,21 +260,11 @@ func makeAPICall(prompt: String) async throws -> Data {
     
     let body = RequestBody(prompt: prompt)
     let encodedData = try JSONEncoder().encode(body)
-    print("Request body:", String(data: encodedData, encoding: .utf8) ?? "Invalid JSON")
     request.httpBody = encodedData
     
-    do {
-        let (data, response) = try await URLSession.shared.data(for: request)
-        if let httpResponse = response as? HTTPURLResponse {
-            print("Response status code:", httpResponse.statusCode)
-            print("Response headers:", httpResponse.allHeaderFields)
-        }
-        print("Response data:", String(data: data, encoding: .utf8) ?? "Invalid response data")
-        return data
-    } catch {
-        print("Network error:", error)
-        throw error
-    }
+    let (data, _) = try await URLSession.shared.data(for: request)
+    let response = try JSONDecoder().decode(Response.self, from: data)
+    return response.response.downloadedFiles
 }
 
 func generateSong(prompt: String) async throws -> [String: Any] {
