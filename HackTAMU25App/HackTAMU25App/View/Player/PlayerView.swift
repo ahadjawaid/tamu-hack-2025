@@ -12,6 +12,8 @@ struct SplineViewModifier: ViewModifier {
     }
 }
 
+private let apiDomain = "localhost:8000"
+
 struct PlayerView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject private var playerManager = AudioPlayerManager()
@@ -97,13 +99,21 @@ struct PlayerView: View {
                 }
             }
         }
-        .onAppear {
-            playerManager.setupAudio(urlString: topic.audioURL!)
-            withAnimation(.spring(duration: 1)) {
-                isAnimating = true
+        .task {
+            if topic.audioURL == nil {
+                do {
+                    let response = try await makeAPICall(prompt: topic.prompt)
+                    print("response", response)
+                    
+                    
+                } catch {
+                    print("Error generating song: \(error.localizedDescription)")
+                }
+            } else {
+                print("has url")
+                playerManager.setupAudio(urlString: topic.audioURL ?? "")
             }
         }
-        .background(Color.gray.opacity(0.05))
     }
     
     private func formatTime(_ time: Double) -> String {
@@ -113,13 +123,47 @@ struct PlayerView: View {
     }
 }
 
+struct RequestBody: Encodable {
+    let prompt: String
+}
+
+func makeAPICall(prompt: String) async throws -> Data {
+    let url = URL(string: "http://127.0.0.1:8000/generate")!
+    print("URL:", url)
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let body = RequestBody(prompt: prompt)
+    let encodedData = try JSONEncoder().encode(body)
+    print("Request body:", String(data: encodedData, encoding: .utf8) ?? "Invalid JSON")
+    request.httpBody = encodedData
+    
+    do {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let httpResponse = response as? HTTPURLResponse {
+            print("Response status code:", httpResponse.statusCode)
+            print("Response headers:", httpResponse.allHeaderFields)
+        }
+        print("Response data:", String(data: data, encoding: .utf8) ?? "Invalid response data")
+        return data
+    } catch {
+        print("Network error:", error)
+        throw error
+    }
+}
 
 func generateSong(prompt: String) async throws -> [String: Any] {
-    guard let url = URL(string: "http://127.0.0.1:8000/generate") else {
+    print("\(apiDomain)/generate")
+    guard let url = URL(string: "\(apiDomain)/generate") else {
         throw URLError(.badURL)
     }
+    print("parameters", prompt)
+    
     let parameters = ["prompt": prompt]
     let jsonData = try JSONEncoder().encode(parameters)
+
     
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
@@ -128,6 +172,8 @@ func generateSong(prompt: String) async throws -> [String: Any] {
     request.httpBody = jsonData
     
     let (data, response) = try await URLSession.shared.data(for: request)
+    print("data", data)
+    print("response", response)
     guard let httpResponse = response as? HTTPURLResponse else {
         throw URLError(.badServerResponse)
     }
@@ -149,5 +195,5 @@ func generateSong(prompt: String) async throws -> [String: Any] {
 }
 
 #Preview {
-    PlayerView(topic: SampleData.shared.topics.filter({ $0.audioURL != nil })[0])
+    PlayerView(topic: SampleData.shared.topics[0])
 }

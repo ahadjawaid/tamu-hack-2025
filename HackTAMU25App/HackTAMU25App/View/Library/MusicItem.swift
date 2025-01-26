@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MusicItem: View {
     let topic: Topic
+    @State private var displayPlayer: Bool = false
     
     var body: some View {
         Button(action: {
@@ -49,9 +50,9 @@ struct MusicItem: View {
         .buttonStyle(ScaleButtonStyle())
         .listRowInsets(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
         .listRowBackground(Color.clear)
+        .fullScreenCover(isPresented: $displayPlayer) {
+            PlayerView(topic: topic)
+        }
     }
 }
 
-#Preview {
-    MusicItem(topic: SampleData.shared.topics[0])
-}
