@@ -70,7 +70,7 @@ export default function Home() {
             <div className="flex flex-col gap-y-8 max-w-2xl">
               <div className='w-full'>
                 <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
-                  Where music meets knoweldge.
+                  Where music meets knowledge.
                 </h1>
                 <p className="text-md sm:text-lg md:text-xl text-zinc-400">
                   Make learning engaging with custom generated songs pertaining to different educational subjects
