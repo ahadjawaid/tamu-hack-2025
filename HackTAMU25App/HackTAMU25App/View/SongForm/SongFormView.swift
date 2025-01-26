@@ -12,7 +12,7 @@ struct SongFormView: View {
     @Environment(\.modelContext) private var context
     @Binding var selectedTab: TabType
     @State private var topic = ""
-    @State private var selectedGenre: Genre = .pop
+    @State private var selectedGenre: Genre = .rock
    
     var body: some View {
        VStack(spacing: 25) {

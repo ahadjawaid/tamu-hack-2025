@@ -11,18 +11,27 @@ import SwiftData
 struct CategoryView: View {
     let category: CategoryType
     @Query private var topics: [Topic]
+    @State private var searchQuery: String = ""
     
-    var categoryTopics: [Topic]  {
-        topics.filter({ $0.category == category })
+    var filteredTopics: [Topic] {
+        let categoryTopics = topics.filter { $0.category == category }
+        if searchQuery.isEmpty {
+            return categoryTopics
+        }
+        return categoryTopics.filter {
+            $0.title.localizedCaseInsensitiveContains(searchQuery) ||
+            $0.subtitle.localizedCaseInsensitiveContains(searchQuery)
+        }
     }
     
     var body: some View {
         NavigationStack {
-            List(categoryTopics) { topic in
+            List(filteredTopics) { topic in
                 MusicItem(topic: topic)
             }
             .listStyle(.plain)
             .navigationTitle(category.rawValue)
+            .searchable(text: $searchQuery)
         }
         .background(Color.gray.opacity(0.05))
     }
