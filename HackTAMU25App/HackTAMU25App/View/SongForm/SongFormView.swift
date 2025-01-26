@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct SongFormView: View {
-   @State private var topic = ""
-   @State private var selectedGenre: Genre = .pop
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
+    @Binding var selectedTab: TabType
+    @State private var topic = ""
+    @State private var selectedGenre: Genre = .pop
    
-   var body: some View {
+    var body: some View {
        VStack(spacing: 25) {
            Text("Create Your Song")
                .font(.largeTitle.bold())
@@ -43,7 +46,20 @@ struct SongFormView: View {
            
            Spacer()
            
-           Button(action: {}) {
+           Button {
+               let newTopic = Topic(
+                    title: topic,
+                    prompt: "A \(selectedGenre.rawValue) song about this topic \(topic)",
+                    genre: selectedGenre,
+                    userAdded: true
+               )
+               
+               context.insert(newTopic)
+               
+               selectedTab = .library
+               
+               dismiss()
+           } label: {
                HStack(spacing: 8) {
                    Image(systemName: "wand.and.stars")
                    Text("Generate")
@@ -62,7 +78,7 @@ struct SongFormView: View {
        .padding(.bottom, 30)
        .padding(.top, 16)
        .background(Color(.systemGroupedBackground))
-   }
+    }
 }
 
 struct GenreGridView: View {
@@ -121,5 +137,5 @@ struct GenreCard: View {
 }
 
 #Preview {
-    SongFormView()
+    SongFormView(selectedTab: .constant(.home))
 }

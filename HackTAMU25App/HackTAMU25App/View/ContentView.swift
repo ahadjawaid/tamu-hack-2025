@@ -62,7 +62,7 @@ struct ContentView: View {
             }
             .background(Color.gray.opacity(0.05))
             .sheet(isPresented: $showSongForm) {
-                SongFormView()
+                SongFormView(selectedTab: $selectedTab)
                     .presentationDetents([.height(UIScreen.main.bounds.height * 0.95)]) // 95% height
                     .presentationDragIndicator(.visible) // Shows pull-down indicator
             }
