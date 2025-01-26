@@ -58,6 +58,12 @@ def generate_song(prompt: str, wait_audio=True):
         # If not waiting, just return what we have (likely empty audio_url)
         return {"response": result, "audio_urls": []}
 
+def generate_lyrics(prompt: str) -> dict:
+    """
+    Calls suno_api_instance.generate_lyrics(prompt) 
+    """
+    return suno_api_instance.generate_lyrics(prompt)
+
 
 def poll_clip(clip_id: str, max_attempts=20, wait_time=5):
     """

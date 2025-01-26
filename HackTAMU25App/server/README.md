@@ -1,6 +1,6 @@
 1. Go to the right directory, 'cd HackTAMU25App' -> 'cd server'
 2. In terminal, run command 'pip install -r requirements.txt'
-3. Create a .env file in the same file as main.py
+3. Create a .env file in the same folder as main.py
 4. Go to suno.com and create an account
 5. Open DevTools (F12 or Function + F12) -> Network
 6. Select the 'Fetch/XHR' filter and in the search bar type 'client?_'

@@ -3,7 +3,7 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from api.client import generate_song
+from api.client import generate_song, generate_lyrics
 
 app = FastAPI()
 
@@ -23,6 +23,31 @@ def generate_song_endpoint(song_prompt: SongPrompt):
         if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
         return {"response": result}
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class LyricsPrompt(BaseModel):
+    prompt: str
+    
+@app.post("/generate_lyrics")
+def generate_lyrics_endpoint(lyrics_prompt: LyricsPrompt):
+    """
+    Expects JSON Body (example): {"prompt": "Upbeat pop song about adult budgeting"}
+    (Receives POST from mobile app or call suno API using a session cookie)
+    
+    """
+    try:
+        result = generate_lyrics(lyrics_prompt.prompt)
+        
+        # Final JSON response format
+        return {
+            "text": result["text"],
+            "title": result["title"],
+            "status": result["status"]
+        }
+        
     except HTTPException as he:
         raise he
     except Exception as e:

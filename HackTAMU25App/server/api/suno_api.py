@@ -104,7 +104,53 @@ class SunoApiPython:
 
         logger.info("Song generation attempt successful.")
         return resp.json()
+    
+    def generate_lyrics(self, prompt: str) -> dict:
+        """
+        Generate lyrics based on a prompt by calling:
+        POST /api/generate/lyrics/
+        Then poll GET /api/generate/lyrics/{generationId}
+        until status = 'complete'.
+        Returns something like:
+        { "text": "...", "title": "...", "status": "complete" }
+        """
+        self.keepAlive()
 
+        # 1) Initiate lyrics generation
+        payload = {"prompt": prompt}
+        headers = {
+            "Authorization": f"Bearer {self.current_token}",
+            "Content-Type": "application/json",
+        }
+        init_url = f"{self.BASE_URL}/api/generate/lyrics/"
+        init_resp = self.session.post(init_url, json=payload, headers=headers)
+        init_resp.raise_for_status()
+
+        init_data = init_resp.json()  # e.g. { "id": "some-uuid" }
+        generation_id = init_data.get("id")
+        if not generation_id:
+            raise Exception("No 'id' returned from lyrics init. Can't poll.")
+
+        # 2) Poll for lyrics completion
+        poll_url = f"{self.BASE_URL}/api/generate/lyrics/{generation_id}"
+        while True:
+            poll_resp = self.session.get(poll_url, headers=headers)
+            poll_resp.raise_for_status()
+            poll_data = poll_resp.json()  # e.g. { "status": "complete", "text": "...", "title": "..." }
+
+            if poll_data.get("status") == "complete":
+                # Once complete, return the entire object
+                return {
+                    "text": poll_data.get("text", ""),
+                    "title": poll_data.get("title", ""),
+                    "status": poll_data.get("status", "")
+                }
+            elif poll_data.get("status") == "error":
+                raise Exception(f"Lyrics generation failed: {poll_data}")
+
+            # Sleep a bit before polling again
+            import time
+            time.sleep(2)
 
 def initialize_suno_api() -> SunoApiPython:
     suno_cookie = config("SUNO_COOKIE", default="")
