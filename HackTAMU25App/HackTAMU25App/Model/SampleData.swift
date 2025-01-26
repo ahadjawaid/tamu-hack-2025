@@ -28,6 +28,11 @@ class SampleData {
         }
     }
     
+    var profile: Profile = Profile(
+       name: "Miss Reveille",
+       profileImage: "profile_image"
+    )
+    
     var topics: [Topic] = [
         Topic(
             title: "Cell Structure",

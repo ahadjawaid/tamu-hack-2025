@@ -23,6 +23,7 @@ struct HackTAMU25AppApp: App {
 func initializeModelContainer() -> ModelContainer {
     let schema = Schema([
         Topic.self,
+        Profile.self
     ])
     
     let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
