@@ -114,7 +114,7 @@ class SampleData {
             title: "Budgeting",
             subtitle: "Personal Finance",
             prompt: "Create a basic monthly budget. Identify areas to save and reduce expenses.",
-            imageURL: "https://static.vecteezy.com/system/resources/previews/041/031/266/non_2x/money-revenue-icon-in-comic-style-dollar-coin-cartoon-illustration-on-isolated-background-finance-structure-splash-effect-business-concept-vector.jpg",
+            imageURL: "https://media.discordapp.net/attachments/1331744956271820881/1333009781895729172/budgeting_background.png?ex=6797559a&is=6796041a&hm=66c882bc2425abfd301268415ad7e5a9849e307b25c58992e7e585b0036c1404&=&format=webp&quality=lossless&width=917&height=935",
             genre: .country,
             category: .finance,
             recommended: true
@@ -123,7 +123,7 @@ class SampleData {
             title: "Investing Basics",
             subtitle: "Stocks and Bonds",
             prompt: "Compare different investment vehicles. Highlight risk vs. reward factors.",
-            imageURL: "https://www.honeyheap.com/images/article1_image.jpg",
+            imageURL: "https://media.discordapp.net/attachments/1331744956271820881/1333009782373613568/investing_background.png?ex=6797559a&is=6796041a&hm=7291b138c7ddee890637bd7077feca171dbd5a604cda944360433e93c568a458&=&format=webp&quality=lossless&width=917&height=935",
             genre: .hiphop,
             category: .finance,
             recommended: true
@@ -132,7 +132,7 @@ class SampleData {
             title: "Retirement Planning",
             subtitle: "Long-term Saving",
             prompt: "Explore strategies for retirement accounts. Focus on compound interest.",
-            imageURL: "https://img.freepik.com/free-vector/retirement-plan-concept-illustration_114360-21616.jpg",
+            imageURL: "https://media.discordapp.net/attachments/1331744956271820881/1333009781538947225/retirement_background.png?ex=6797559a&is=6796041a&hm=e789e00a578120c6b35c35fd731473a1f75a1b65f20260a01480b449fd72b71b&=&format=webp&quality=lossless&width=913&height=932",
             genre: .rock,
             category: .finance,
             recommended: true
