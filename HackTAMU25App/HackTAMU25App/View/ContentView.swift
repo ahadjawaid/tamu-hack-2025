@@ -15,39 +15,42 @@ enum TabType: String {
 struct ContentView: View {
     @State private var selectedTab: TabType = .home
    
-   var body: some View {
-       NavigationStack {
-           Header(selectedTab)
-           
-           ZStack(alignment: .bottom) {
-               TabView {
-                   HomeView()
-                       .tabItem {
-                           Label("Home", systemImage: "house")
-                       }
-                       
-                   Color.clear
+    var body: some View {
+        NavigationStack {
+            Header(selectedTab)
+            
+            ZStack(alignment: .bottom) {
+                TabView(selection: $selectedTab) {
+                    HomeView()
+                        .tag(TabType.home)
+                        .tabItem {
+                            Label("Home", systemImage: "house")
+                        }
+                    
+                    Color.clear
+                        .tag(nil as TabType?)
                         .tabItem {
                             Text("•••")
                         }
-                   
-                   LibraryView()
-                       .tabItem {
-                           Label("Library", systemImage: "play.square.stack")
-                       }
-               }
-               
-               Button(action: {
-                   // Add your action here
-               }) {
-                   Image(systemName: "plus.circle.fill")
-                       .font(.system(size: 44))
-                       .foregroundColor(.blue)
-               }
-           }
-       }
-       .padding()
-   }
+                    
+                    LibraryView()
+                        .tag(TabType.library)
+                        .tabItem {
+                            Label("Library", systemImage: "play.square.stack")
+                        }
+                }
+                
+                Button(action: {
+                    // Add your action here
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 44))
+                        .foregroundColor(.blue)
+                }
+            }
+        }
+        .padding()
+    }
 }
 
 #Preview {

@@ -8,6 +8,38 @@
 import SwiftUI
 import SwiftData
 
+@Model
+final class Topic {
+    var title: String
+    var subtitle: String
+    var prompt: String
+    var imageURL: Optional<String>
+    var category: CategoryType
+    var userAdded: Bool
+    var recommended: Bool
+    var genre: Optional<Genre>
+    
+    init(
+        title: String,
+        subtitle: String = "",
+        prompt: String = "",
+        imageURL: Optional<String> = nil,
+        genre: Optional<Genre> = nil,
+        category: CategoryType = .unknown,
+        userAdded: Bool = false,
+        recommended: Bool = false
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.prompt = prompt
+        self.imageURL = imageURL
+        self.genre = genre
+        self.category = category
+        self.userAdded = userAdded
+        self.recommended = recommended
+    }
+}
+
 struct CategoryData {
     let name: String
     let icon: String
@@ -62,34 +94,29 @@ enum CategoryType: String, CaseIterable, Identifiable, Codable {
             case .unknown: return Color(hex: "95A5A6")        // Gray
         }
     }
-}
-
-@Model
-final class Topic {
-    var title: String
-    var subtitle: String
-    var prompt: String
-    var imageURL: Optional<String>
-    var category: CategoryType
-    var userAdded: Bool
-    var recommended: Bool
     
-    init(
-        title: String,
-        subtitle: String = "",
-        prompt: String = "",
-        imageURL: Optional<String>,
-        category: CategoryType = .unknown,
-        userAdded: Bool = false,
-        recommended: Bool = false
-    ) {
-        self.title = title
-        self.subtitle = subtitle
-        self.prompt = prompt
-        self.imageURL = imageURL
-        self.category = category
-        self.userAdded = userAdded
-        self.recommended = recommended
+    func isEquivalent(to other: CategoryType) -> Bool {
+        return self.rawValue == other.rawValue
     }
 }
 
+enum Genre: String, CaseIterable, Identifiable {
+    case rock = "Rock"
+    case pop = "Pop"
+    case jazz = "Jazz"
+    case classical = "Classical"
+    case hiphop = "Hip-hop"
+    
+    var id: String { rawValue }
+    
+    var icon: String {
+        switch self {
+        case .rock: return "guitar.fill"
+        case .pop: return "music.mic"
+        case .jazz: return "saxophone.fill"
+        case .classical: return "headphones"
+        case .hiphop: return  "music.note"
+        }
+    }
+    
+}
