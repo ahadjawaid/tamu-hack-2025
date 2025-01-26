@@ -78,7 +78,7 @@ export default function Home() {
               </div>
 
               <div className='block md:hidden mx-auto'>
-                <Image src="/hero.png" alt="Hero" width={200} height={200} priority />
+                <Image src="/hero.png" alt="Hero" width={300} height={300} priority />
               </div>
 
               <form className='flex flex-col gap-y-6' onSubmit={handleSubmit}>
@@ -116,9 +116,9 @@ export default function Home() {
               <Image
                 src="/hero.png"
                 alt="Hero"
-                width={500}
-                height={500}
-                className="drop-shadow-2xl"
+                width={425}
+                height={425}
+                className="drop-shadow-2xl pt-24"
                 priority
               />
             </div>
