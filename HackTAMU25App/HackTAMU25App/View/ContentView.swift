@@ -14,6 +14,7 @@ enum TabType: String {
 
 struct ContentView: View {
     @State private var selectedTab: TabType = .home
+    @State private var showSongForm: Bool = false
    
     var body: some View {
         NavigationStack {
@@ -44,7 +45,7 @@ struct ContentView: View {
                     }
                     
                     Button(action: {
-                        // Add your action here
+                        showSongForm.toggle()
                     }) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 44))
@@ -53,6 +54,9 @@ struct ContentView: View {
                 }
             }
             .background(Color.gray.opacity(0.05))
+            .sheet(isPresented: $showSongForm) {
+                SongFormView()
+            }
         }
         .padding()
         .background(Color.gray.opacity(0.05))

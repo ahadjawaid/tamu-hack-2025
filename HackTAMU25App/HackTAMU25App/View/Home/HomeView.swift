@@ -17,7 +17,7 @@ struct HomeView: View {
         ScrollView {
             VStack {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Top Picks For You")
+                    Text("Daily Picks")
                         .font(.title2)
                         .fontWeight(.bold)
                     

@@ -12,54 +12,55 @@ struct SongFormView: View {
    @State private var selectedGenre: Genre = .pop
    
    var body: some View {
-       ScrollView {
-           VStack(spacing: 25) {
-               Text("Create Your Song")
-                   .font(.system(size: 36, weight: .bold))
-                   .padding(.top, 20)
+       VStack(spacing: 25) {
+           Text("Create Your Song")
+               .font(.largeTitle.bold())
+               .padding(.top, 20)
+           
+           VStack(alignment: .leading, spacing: 12) {
+               Label("TOPIC", systemImage: "sparkles")
+                   .font(.subheadline)
+                   .fontWeight(.semibold)
                
-               VStack(alignment: .leading, spacing: 12) {
-                   Label("TOPIC", systemImage: "sparkles")
-                       .font(.subheadline)
-                       .fontWeight(.semibold)
-                   
-                   TextField("What do you want to learn about?", text: $topic)
-                       .padding()
-                       .background(
-                           RoundedRectangle(cornerRadius: 12)
-                               .fill(Color(.systemBackground))
-                               .shadow(color: Color(.systemGray4), radius: 8)
-                       )
-               }
-               .padding(.horizontal)
-               
-               VStack(alignment: .leading, spacing: 15) {
-                   Label("GENRE", systemImage: "music.note")
-                       .font(.subheadline)
-                       .fontWeight(.semibold)
-                       .padding(.horizontal)
-                   
-                   GenreGridView(selectedGenre: $selectedGenre)
-               }
-               
-               Button(action: {}) {
-                   HStack(spacing: 8) {
-                       Image(systemName: "wand.and.stars")
-                       Text("Generate")
-                           .fontWeight(.semibold)
-                   }
-                   .font(.title3)
-                   .foregroundColor(.white)
-                   .frame(height: 56)
-                   .frame(maxWidth: .infinity)
-                   .background(Color.blue)
-                   .clipShape(Capsule())
-               }
-               .padding(.horizontal, 25)
-               .padding(.top, 10)
+               TextField("What do you want to learn about?", text: $topic)
+                   .padding()
+                   .background(
+                       RoundedRectangle(cornerRadius: 12)
+                           .fill(Color(.systemBackground))
+                           .shadow(color: Color(.systemGray4), radius: 8)
+                   )
            }
-           .padding(.bottom, 30)
+           .padding(.horizontal)
+           
+           VStack(alignment: .leading, spacing: 15) {
+               Label("GENRE", systemImage: "music.note")
+                   .font(.subheadline)
+                   .fontWeight(.semibold)
+                   .padding(.horizontal)
+               
+               GenreGridView(selectedGenre: $selectedGenre)
+           }
+           
+           Spacer()
+           
+           Button(action: {}) {
+               HStack(spacing: 8) {
+                   Image(systemName: "wand.and.stars")
+                   Text("Generate")
+                       .fontWeight(.semibold)
+               }
+               .font(.title3)
+               .foregroundColor(.white)
+               .frame(height: 56)
+               .frame(maxWidth: .infinity)
+               .background(Color.blue)
+               .clipShape(Capsule())
+           }
+           .padding(.horizontal, 25)
+           .padding(.top, 10)
        }
+       .padding(.bottom, 30)
+       .padding(.top, 16)
        .background(Color(.systemGroupedBackground))
    }
 }
