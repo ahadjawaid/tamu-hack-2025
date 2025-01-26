@@ -1,6 +1,7 @@
 # Handles suno API requests, including GET and POST requests
 import time
 import os
+import boto3
 import requests
 import logging
 import json
@@ -112,6 +113,21 @@ def poll_clip(clip_id: str, max_attempts=20, wait_time=5):
     print(f"Timed out waiting for clip {clip_id} to have audio.")
     return None
 
+def generate_songs_and_lyrics(prompt: str, wait_audio=True):
+    audio_result = generate_song(prompt, wait_audio-wait_audio)
+    if "error" in audio_result:
+        return audio_result # pass error along
+
+    try: 
+        lyrics_result = suno_api_instance.generate_lyrics(prompt)
+    except Exception as e:
+        return {"error": f"Failed to generate lyrics: {str(e)}"}
+    
+    # Combine both of them into one single dict
+    return {
+        "audio": audio_result,
+        "lyrics": lyrics_result
+    }
 
 def download_audio_files(audio_urls, output_dir="downloaded_audio"):
     """
@@ -153,3 +169,20 @@ def save_response_to_file(data, filename: str):
         json.dump(data, f, indent=4)
 
     print(f"Saved response to {path}")
+    
+def upload_audio_to_s3(file_path: str, bucket_name: str, s3_key: str):
+    """
+    file_path: local path to the file you want to upload
+    bucket_name: e.g. 'my-app-audio-bucket'
+    s3_key: the path/key inside the bucket, e.g. 'audio/song_1.mp4'
+    """
+    s3 = boto3.client("s3")
+    s3.upload_file(file_path, bucket_name, s3_key)
+    """
+    presigned_url = s3.generate_presigned_url(
+        'get_object',
+        Params={'Bucket': bucket_name, 'Key': s3_key},
+        ExpiresIn=3600
+    )
+    return presigned_url
+    """
