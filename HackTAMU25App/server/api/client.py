@@ -116,7 +116,7 @@ def download_audio_files(audio_urls, output_dir="downloaded_audio"):
     saved_paths = []
 
     for i, url in enumerate(audio_urls, start=1):
-        filename = f"clip_{i}.mp4"  # or detect extension from headers
+        filename = f"song_{i}.mp4"  # or detect extension from headers
         filepath = os.path.join(output_dir, filename)
 
         print(f"Downloading {url} -> {filepath}")
