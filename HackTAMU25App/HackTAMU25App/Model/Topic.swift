@@ -14,10 +14,10 @@ final class Topic {
     var subtitle: String
     var prompt: String
     var imageURL: Optional<String>
+    var genre: Optional<Genre>
     var category: CategoryType
     var userAdded: Bool
     var recommended: Bool
-    var genre: Optional<Genre>
     
     init(
         title: String,
@@ -100,23 +100,35 @@ enum CategoryType: String, CaseIterable, Identifiable, Codable {
     }
 }
 
-enum Genre: String, CaseIterable, Identifiable {
+enum Genre: String, CaseIterable, Identifiable, Codable {
     case rock = "Rock"
     case pop = "Pop"
     case jazz = "Jazz"
     case classical = "Classical"
+    case country = "Country"
     case hiphop = "Hip-hop"
     
     var id: String { rawValue }
     
     var icon: String {
         switch self {
-        case .rock: return "guitar.fill"
+        case .rock: return "guitars.fill"
         case .pop: return "music.mic"
-        case .jazz: return "saxophone.fill"
-        case .classical: return "headphones"
+        case .jazz: return "music.note.list"
+        case .classical: return "pianokeys"
+        case .country: return "music.house"
         case .hiphop: return  "music.note"
         }
     }
     
+    var color: Color {
+         switch self {
+         case .rock: return .red
+         case .pop: return .purple
+         case .jazz: return .blue
+         case .classical: return .indigo
+         case .country: return .orange
+         case .hiphop: return .green
+         }
+     }
 }

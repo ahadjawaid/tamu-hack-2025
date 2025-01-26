@@ -54,7 +54,7 @@ struct TopicCard: View {
         .frame(width: 240)
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: Color(.systemGray4), radius: 5)
+        .shadow(color: Color(.systemGray4), radius: 3)
         .padding(.vertical, 4)
     }
 }

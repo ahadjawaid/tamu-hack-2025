@@ -1,10 +1,3 @@
-//
-//  LibraryView.swift
-//  HackTAMU25App
-//
-//  Created by tk on 1/25/25.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -15,47 +8,63 @@ struct LibraryView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                Text("My Songs")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                
+            VStack(alignment: .leading, spacing: 16) {
                 ForEach(userTopics) { topic in
-                    HStack {
-                        
+                    Button(action: {
+                        // Add your playback action here
+                    }) {
+                        HStack(spacing: 16) {
+                            // Icon with background
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(topic.genre?.color.opacity(0.15) ?? .gray.opacity(0.15))
+                                    .frame(width: 48, height: 48)
+                                
+                                Image(systemName: topic.genre?.icon ?? "music.note")
+                                    .font(.title)
+                                    .foregroundColor(topic.genre?.color ?? .gray)
+                            }
+                            
+                            // Title and genre
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(topic.title)
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                
+                                if let genre = topic.genre?.rawValue {
+                                    Text(genre)
+                                        .font(.subheadline)
+                                        .foregroundColor(topic.genre?.color ?? .gray)
+                                }
+                            }
+                            
+                            Spacer()
+                            
+                            // Play button
+                            Image(systemName: "play.circle.fill")
+                                .font(.title)
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.white)
+                                .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                        )
                     }
+                    .buttonStyle(ScaleButtonStyle())
                 }
-                
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
-struct GenreIcon: View {
-    let genre: String
-    
-    var body: some View {
-        let iconName: String
-        switch genre.lowercased() {
-        case "rock":
-            iconName = "guitar.fill"
-        case "pop":
-            iconName = "music.mic"
-        case "jazz":
-            iconName = "saxophone.fill"
-        case "classical":
-            iconName = "music.note"
-        case "hip-hop":
-            iconName = "headphones"
-        default:
-            iconName = "music.note"
-        }
-        
-        return Image(systemName: iconName)
-            .resizable()
-            .scaledToFit()
-            .foregroundColor(.blue)
+// Custom button style for interactive feedback
+struct ScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
     }
 }
 

@@ -34,6 +34,7 @@ class SampleData {
             subtitle: "Basic Components",
             prompt: "Describe the main parts of a cell and their functions. Explore how organelles work together.",
             imageURL: nil,
+            genre: .rock,
             category: .biology,
             userAdded: true
         ),
@@ -42,6 +43,7 @@ class SampleData {
             subtitle: "Heredity",
             prompt: "Explain how traits pass from parents to offspring. Include basic Mendelian concepts.",
             imageURL: nil,
+            genre: .pop,
             category: .biology,
             userAdded: true
         ),
@@ -50,6 +52,7 @@ class SampleData {
             subtitle: "Energy Conversion",
             prompt: "Explore how plants convert light into chemical energy. Discuss the role of chlorophyll.",
             imageURL: nil,
+            genre: .jazz,
             category: .biology,
             userAdded: true
         ),

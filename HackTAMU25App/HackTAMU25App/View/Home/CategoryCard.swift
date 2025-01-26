@@ -34,7 +34,7 @@ struct CategoryCard: View {
         .frame(width: 160)
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: Color(.systemGray4), radius: 4)
+        .shadow(color: Color(.systemGray4), radius: 2)
         .padding(.vertical, 4)
     }
 }

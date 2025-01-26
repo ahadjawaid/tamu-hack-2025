@@ -9,7 +9,7 @@ import SwiftUI
 
 enum TabType: String {
     case home = "Home"
-    case library = "Library"
+    case library = "My Songs"
 }
 
 struct ContentView: View {
@@ -17,39 +17,46 @@ struct ContentView: View {
    
     var body: some View {
         NavigationStack {
-            Header(selectedTab)
-            
-            ZStack(alignment: .bottom) {
-                TabView(selection: $selectedTab) {
-                    HomeView()
-                        .tag(TabType.home)
-                        .tabItem {
-                            Label("Home", systemImage: "house")
-                        }
-                    
-                    Color.clear
-                        .tag(nil as TabType?)
-                        .tabItem {
-                            Text("•••")
-                        }
-                    
-                    LibraryView()
-                        .tag(TabType.library)
-                        .tabItem {
-                            Label("Library", systemImage: "play.square.stack")
-                        }
-                }
+            VStack {
+                Header(selectedTab)
                 
-                Button(action: {
-                    // Add your action here
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 44))
-                        .foregroundColor(.blue)
+                ZStack(alignment: .bottom) {
+                    TabView(selection: $selectedTab) {
+                        HomeView()
+                            .tag(TabType.home)
+                            .tabItem {
+                                Label("Home", systemImage: "house")
+                            }
+                            .background(Color.gray.opacity(0.05))
+                        
+                        Color.gray.opacity(0.05)
+                            .tag(nil as TabType?)
+                            .tabItem {
+                                Text("•••")
+                            }
+                        
+                        LibraryView()
+                            .tag(TabType.library)
+                            .tabItem {
+                                Label("My Songs", systemImage: "play.square.stack")
+                            }
+                            .background(Color.gray.opacity(0.05))
+                    }
+                    
+                    Button(action: {
+                        // Add your action here
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 44))
+                            .foregroundColor(.blue)
+                    }
                 }
             }
+            .background(Color.gray.opacity(0.05))
         }
         .padding()
+        .background(Color.gray.opacity(0.05))
+
     }
 }
 
