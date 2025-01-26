@@ -41,7 +41,8 @@ class SampleData {
             prompt: "Describe the main parts of a cell and their functions. Explore how organelles work together.",
             genre: .rock,
             category: .biology,
-            userAdded: true
+            userAdded: true,
+            audioURL: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8"
         ),
         Topic(
             title: "Genetics",

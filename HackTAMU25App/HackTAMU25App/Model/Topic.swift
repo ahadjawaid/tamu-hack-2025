@@ -19,6 +19,7 @@ final class Topic {
     var userAdded: Bool
     var recommended: Bool
     var dateCreated: Date
+    var audioURL: Optional<String>
     
     init(
         title: String,
@@ -29,6 +30,7 @@ final class Topic {
         category: CategoryType = .unknown,
         userAdded: Bool = false,
         recommended: Bool = false,
+        audioURL: Optional<String> = nil,
         date: Date = .now
     ) {
         self.title = title
@@ -40,6 +42,7 @@ final class Topic {
         self.userAdded = userAdded
         self.recommended = recommended
         self.dateCreated = date
+        self.audioURL = audioURL
     }
 }
 

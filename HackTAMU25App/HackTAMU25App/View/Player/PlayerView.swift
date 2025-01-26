@@ -1,14 +1,23 @@
 import SwiftUI
+import SwiftData
 import AVFoundation
 import SplineRuntime
 
+struct SplineViewModifier: ViewModifier {
+    let color: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .background(color)
+    }
+}
+
 struct PlayerView: View {
     @Environment(\.dismiss) var dismiss
-    @Environment(\.colorScheme) var colorScheme
     @StateObject private var playerManager = AudioPlayerManager()
     @State private var sliderValue: Double = 0
     @State private var isAnimating = false
-    let audioURL: String
+    let topic: Topic
         
     var body: some View {
         NavigationStack {
@@ -23,7 +32,14 @@ struct PlayerView: View {
                         errorView(error)
                     } else {
                         let url = URL(string: "https://build.spline.design/uYSazCziM6sbgc5gcgRC/scene.splineswift")!
-                        SplineView(sceneFileURL: url)
+                        ZStack(alignment: .bottomTrailing) {
+                            SplineView(sceneFileURL: url)
+                                .clipShape(RoundedRectangle(cornerRadius: 25))
+                            RoundedRectangle(cornerRadius: 5).fill(Color(hex: "#f9f9fa"))
+                                .frame(width: 180, height: 80)
+                            RoundedRectangle(cornerRadius: 25).fill(.yellow.opacity(0.1))
+                        }
+                        
                         
                         playerControls
                     }
@@ -40,9 +56,8 @@ struct PlayerView: View {
                 }
             }
         }
-        .preferredColorScheme(colorScheme)
         .onAppear {
-            playerManager.setupAudio(urlString: audioURL)
+            playerManager.setupAudio(urlString: topic.audioURL!)
             withAnimation(.spring(duration: 1)) {
                 isAnimating = true
             }
@@ -80,6 +95,10 @@ struct PlayerView: View {
     
     private var playerControls: some View {
         VStack(spacing: 24) {
+            HStack {
+                Text(topic.title)
+            }
+            
             VStack(spacing: 8) {
                 Slider(value: $sliderValue,
                        in: 0...max(playerManager.duration, 0.01)) { editing in
@@ -134,5 +153,5 @@ struct PlayerView: View {
 
 
 #Preview {
-    PlayerView(audioURL: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")
+    PlayerView(topic: SampleData.shared.topics.filter({ $0.audioURL != nil })[0])
 }
