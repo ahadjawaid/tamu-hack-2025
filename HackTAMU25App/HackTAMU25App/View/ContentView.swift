@@ -32,7 +32,7 @@ struct ContentView: View {
                         Color.gray.opacity(0.05)
                             .tag(nil as TabType?)
                             .tabItem {
-                                Text("•••")
+                                Text("")
                             }
                         
                         LibraryView()
