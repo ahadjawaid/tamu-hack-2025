@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct Header: View {
-    let tab: Tab
+    let tab: TabType
     @State var showProfile: Bool = false
     
-    init(_ tab: Tab) {
+    init(_ tab: TabType) {
         self.tab = tab
     }
     

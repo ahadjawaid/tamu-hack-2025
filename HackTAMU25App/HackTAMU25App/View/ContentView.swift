@@ -7,23 +7,44 @@
 
 import SwiftUI
 
-enum Tab: String {
+enum TabType: String {
     case home = "Home"
     case library = "Library"
 }
 
 struct ContentView: View {
-    @State private var selectedTab: Tab = .home
+    @State private var selectedTab: TabType = .home
    
    var body: some View {
        NavigationStack {
            Header(selectedTab)
            
-           ScrollView {
-               HomeView()
+           ZStack(alignment: .bottom) {
+               TabView {
+                   HomeView()
+                       .tabItem {
+                           Label("Home", systemImage: "house")
+                       }
+                       
+                   Color.clear
+                        .tabItem {
+                            Text("•••")
+                        }
+                   
+                   LibraryView()
+                       .tabItem {
+                           Label("Library", systemImage: "play.square.stack")
+                       }
+               }
+               
+               Button(action: {
+                   // Add your action here
+               }) {
+                   Image(systemName: "plus.circle.fill")
+                       .font(.system(size: 44))
+                       .foregroundColor(.blue)
+               }
            }
-           
-           Navigation(selectedTab: $selectedTab)
        }
        .padding()
    }
