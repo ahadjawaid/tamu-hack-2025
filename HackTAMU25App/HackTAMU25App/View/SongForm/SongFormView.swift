@@ -53,7 +53,7 @@ struct SongFormView: View {
                .foregroundColor(.white)
                .frame(height: 56)
                .frame(maxWidth: .infinity)
-               .background(Color.blue)
+               .background(.accent)
                .clipShape(Capsule())
            }
            .padding(.horizontal, 25)

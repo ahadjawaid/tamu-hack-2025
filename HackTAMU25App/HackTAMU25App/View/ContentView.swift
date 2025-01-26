@@ -49,14 +49,16 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 44))
-                            .foregroundColor(.blue)
                     }
                 }
             }
             .background(Color.gray.opacity(0.05))
             .sheet(isPresented: $showSongForm) {
                 SongFormView()
+                    .presentationDetents([.height(UIScreen.main.bounds.height * 0.95)]) // 95% height
+                    .presentationDragIndicator(.visible) // Shows pull-down indicator
             }
+            
         }
         .padding()
         .background(Color.gray.opacity(0.05))
