@@ -18,6 +18,7 @@ final class Topic {
     var category: CategoryType
     var userAdded: Bool
     var recommended: Bool
+    var dateCreated: Date
     
     init(
         title: String,
@@ -27,7 +28,8 @@ final class Topic {
         genre: Optional<Genre> = nil,
         category: CategoryType = .unknown,
         userAdded: Bool = false,
-        recommended: Bool = false
+        recommended: Bool = false,
+        date: Date = .now
     ) {
         self.title = title
         self.subtitle = subtitle
@@ -37,6 +39,7 @@ final class Topic {
         self.category = category
         self.userAdded = userAdded
         self.recommended = recommended
+        self.dateCreated = date
     }
 }
 
