@@ -17,10 +17,12 @@ def generate_song(prompt: str, wait_audio=True):
     4) Download each audio file, and return final data.
     """
     # 1) Start generation
+    print("Generate_song prompt", prompt)
     result = suno_api_instance.generate_song(prompt)
-
+    print("Generate_song result", result)
     # 2) Optionally save raw JSON for debugging
     save_response_to_file(result, "response.json")
+    print("save response")
 
     # The result typically looks like:
     # {

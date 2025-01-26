@@ -1,0 +1,64 @@
+{
+    "id": "83e460bf-877a-4018-83fb-87a42257c40d",
+    "clips": [
+        {
+            "id": "97953097-b00d-4252-9c14-262151ed6b89",
+            "video_url": "",
+            "audio_url": "",
+            "major_model_version": "v2",
+            "model_name": "chirp-v2-xxl-alpha",
+            "metadata": {
+                "prompt": "Explain how traits pass from parents to offspring. Include basic Mendelian concepts.",
+                "type": "gen",
+                "stream": true
+            },
+            "is_liked": false,
+            "user_id": "a389eff5-125a-43bf-98d6-e2b0326127c4",
+            "display_name": "RevolutionaryLosslessAudio9571",
+            "handle": "revolutionarylosslessaudio9571",
+            "is_handle_updated": false,
+            "avatar_image_url": "https://cdn1.suno.ai/defaultBlue.webp",
+            "is_trashed": false,
+            "created_at": "2025-01-26T13:49:39.174Z",
+            "status": "submitted",
+            "title": "",
+            "play_count": 0,
+            "upvote_count": 0,
+            "is_public": false
+        },
+        {
+            "id": "db158912-e68f-4735-b60e-532255e0f931",
+            "video_url": "",
+            "audio_url": "",
+            "major_model_version": "v2",
+            "model_name": "chirp-v2-xxl-alpha",
+            "metadata": {
+                "prompt": "Explain how traits pass from parents to offspring. Include basic Mendelian concepts.",
+                "type": "gen",
+                "stream": true
+            },
+            "is_liked": false,
+            "user_id": "a389eff5-125a-43bf-98d6-e2b0326127c4",
+            "display_name": "RevolutionaryLosslessAudio9571",
+            "handle": "revolutionarylosslessaudio9571",
+            "is_handle_updated": false,
+            "avatar_image_url": "https://cdn1.suno.ai/defaultBlue.webp",
+            "is_trashed": false,
+            "created_at": "2025-01-26T13:49:39.175Z",
+            "status": "submitted",
+            "title": "",
+            "play_count": 0,
+            "upvote_count": 0,
+            "is_public": false
+        }
+    ],
+    "metadata": {
+        "prompt": "Explain how traits pass from parents to offspring. Include basic Mendelian concepts.",
+        "type": "gen",
+        "stream": true
+    },
+    "major_model_version": "v2",
+    "status": "complete",
+    "created_at": "2025-01-26T13:49:39.147Z",
+    "batch_size": 1
+}

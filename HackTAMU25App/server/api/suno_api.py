@@ -91,6 +91,9 @@ class SunoApiPython:
             "generation_type": "AUDIO",
         }
 
+        print("self.current_token", self.current_token)
+        print("payload", payload)
+
         headers = {
             "Authorization": f"Bearer {self.current_token}",
             "Content-Type": "application/json",
@@ -98,7 +101,10 @@ class SunoApiPython:
 
         url = f"{self.BASE_URL}/api/generate/v2/"
         logger.info(f"Sending POST request to Generate API: {url} with payload: {payload}")
+        print("Making post request to generate song")
+        # ERROR 422: Token validation failed.
         resp = self.session.post(url, json=payload, headers=headers)
+        print("response", resp)
         logger.debug(f"Generate POST Response: {resp.status_code} {resp.text}")
         resp.raise_for_status()
 

@@ -1,0 +1,64 @@
+{
+    "id": "3a841157-475b-487d-a048-06052380b25a",
+    "clips": [
+        {
+            "id": "7ff267ae-e7a7-4093-8714-3bb04aca59d1",
+            "video_url": "",
+            "audio_url": "",
+            "major_model_version": "v2",
+            "model_name": "chirp-v2-xxl-alpha",
+            "metadata": {
+                "prompt": "Genetics",
+                "type": "gen",
+                "stream": true
+            },
+            "is_liked": false,
+            "user_id": "a389eff5-125a-43bf-98d6-e2b0326127c4",
+            "display_name": "RevolutionaryLosslessAudio9571",
+            "handle": "revolutionarylosslessaudio9571",
+            "is_handle_updated": false,
+            "avatar_image_url": "https://cdn1.suno.ai/defaultBlue.webp",
+            "is_trashed": false,
+            "created_at": "2025-01-26T13:48:24.386Z",
+            "status": "submitted",
+            "title": "",
+            "play_count": 0,
+            "upvote_count": 0,
+            "is_public": false
+        },
+        {
+            "id": "ac5739b4-cee5-48b2-831b-a41be4f7c6a6",
+            "video_url": "",
+            "audio_url": "",
+            "major_model_version": "v2",
+            "model_name": "chirp-v2-xxl-alpha",
+            "metadata": {
+                "prompt": "Genetics",
+                "type": "gen",
+                "stream": true
+            },
+            "is_liked": false,
+            "user_id": "a389eff5-125a-43bf-98d6-e2b0326127c4",
+            "display_name": "RevolutionaryLosslessAudio9571",
+            "handle": "revolutionarylosslessaudio9571",
+            "is_handle_updated": false,
+            "avatar_image_url": "https://cdn1.suno.ai/defaultBlue.webp",
+            "is_trashed": false,
+            "created_at": "2025-01-26T13:48:24.386Z",
+            "status": "submitted",
+            "title": "",
+            "play_count": 0,
+            "upvote_count": 0,
+            "is_public": false
+        }
+    ],
+    "metadata": {
+        "prompt": "Genetics",
+        "type": "gen",
+        "stream": true
+    },
+    "major_model_version": "v2",
+    "status": "complete",
+    "created_at": "2025-01-26T13:48:24.360Z",
+    "batch_size": 1
+}
