@@ -12,7 +12,7 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const googleFormAction = 'https://docs.google.com/forms/d/e/1FAIpQLSfLZIK2VP_JimUlGZiwnsiyP7GbfdAElBvdC3fKk1mib6pCsA/formResponse';
   const emailFieldName = 'entry.142330486';
-  const earlySupports = 0;
+  const earlySupports = 4;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
