@@ -39,7 +39,11 @@ struct HomeView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 20) {
                             ForEach(CategoryType.allCases.filter { $0 != .unknown }) { category in
-                                CategoryCard(category: category)
+                                NavigationLink {
+                                    CategoryView(category: category)
+                                } label: {
+                                    CategoryCard(category: category)
+                                }
                             }
                         }
                         .padding(.bottom, 8)

@@ -21,10 +21,11 @@ struct Header: View {
             
             Spacer()
             
-            Button {
-                showProfile.toggle()
+            NavigationLink {
+                ProfileView()
             } label: {
                 Image(systemName: "person.crop.circle.fill")
+                    .foregroundStyle(.accent)
             }
         }
         .font(.largeTitle.bold())

@@ -14,7 +14,7 @@ struct CategoryCard: View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(category.color.opacity(0.1))
+                    .fill(category.color.opacity(0.2))
                     .frame(width: 160, height: 160)
                 
                 VStack(spacing: 12) {

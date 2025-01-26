@@ -12,6 +12,14 @@ enum TabType: String {
     case library = "My Songs"
 }
 
+struct BackgroundPattern: View {
+    var body: some View {
+        Image("background")
+            .resizable(resizingMode: .tile)
+            .ignoresSafeArea()
+    }
+}
+
 struct ContentView: View {
     @State private var selectedTab: TabType = .home
     @State private var showSongForm: Bool = false
@@ -48,7 +56,7 @@ struct ContentView: View {
                         showSongForm.toggle()
                     }) {
                         Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 44))
+                            .font(.system(size: 48))
                     }
                 }
             }

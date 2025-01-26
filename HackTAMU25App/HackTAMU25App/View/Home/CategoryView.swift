@@ -9,24 +9,26 @@ import SwiftUI
 import SwiftData
 
 struct CategoryView: View {
-    let selectedCategory: CategoryType
+    let category: CategoryType
     @Query private var topics: [Topic]
     
-    init(category: CategoryType) {
-        self.selectedCategory = category
-        _topics = Query(filter: #Predicate<Topic> {
-            category == $0.category
-        })
-        
-        print(self.topics.count)
+    var categoryTopics: [Topic]  {
+        topics.filter({ $0.category == category })
     }
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List(categoryTopics) { topic in
+                MusicItem(topic: topic)
+            }
+            .listStyle(.plain)
+            .navigationTitle(category.rawValue)
+        }
+        .background(Color.gray.opacity(0.05))
     }
 }
 
 #Preview {
-    CategoryView(category: .business)
+    CategoryView(category: .biology)
         .modelContainer(SampleData.shared.modelContainer)
 }
