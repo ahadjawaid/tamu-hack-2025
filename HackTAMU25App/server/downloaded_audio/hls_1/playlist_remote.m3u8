@@ -1,0 +1,11 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:4
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:4.010667,
+https://brainbeats1.s3.us-east-1.amazonaws.com/232f6412-cab6-4aa7-805d-13d6b017bd0b/playlist0.ts
+#EXTINF:3.989333,
+https://brainbeats1.s3.us-east-1.amazonaws.com/3108973b-afb1-4be6-ba79-b8b74db5eee4/playlist1.ts
+#EXTINF:1.181333,
+https://brainbeats1.s3.us-east-1.amazonaws.com/87799112-e486-455e-bcf2-9443679dbf3e/playlist2.ts
+#EXT-X-ENDLIST

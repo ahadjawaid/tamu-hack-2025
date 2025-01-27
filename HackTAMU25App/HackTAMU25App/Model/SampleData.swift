@@ -42,6 +42,7 @@ class SampleData {
             genre: .rock,
             category: .biology,
             userAdded: true
+//            audioURL: "https://brainbeats1.s3.us-east-1.amazonaws.com/0bf3812b-6c62-4261-bc75-69d61f73a049/playlist6.m3u8"
         ),
         Topic(
             title: "Genetics",

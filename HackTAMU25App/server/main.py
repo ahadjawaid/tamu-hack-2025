@@ -5,9 +5,27 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from api.client import generate_song
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+
 
 app = FastAPI()
-app.mount("/downloaded_audio", StaticFiles(directory="downloaded_audio"), name="audio")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/downloaded_audio/{filename}")
+async def serve_audio(filename: str):
+    return FileResponse(
+        f"downloaded_audio/{filename}",
+        media_type="video/mp4",
+        headers={
+            "Accept-Ranges": "bytes"
+        }
+    )
 
 
 class SongPrompt(BaseModel):

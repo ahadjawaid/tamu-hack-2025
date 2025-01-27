@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		66EDC0E32D46896100160963 /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 66EDC0E22D46896100160963 /* SplineRuntime */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		66EDBF692D45615500160963 /* HackTAMU25App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackTAMU25App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66EDC0E32D46896100160963 /* SplineRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = HackTAMU25App;
 			packageProductDependencies = (
+				66EDC0E22D46896100160963 /* SplineRuntime */,
 			);
 			productName = HackTAMU25App;
 			productReference = 66EDBF692D45615500160963 /* HackTAMU25App.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 66EDBF602D45615500160963;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				66EDC0E12D46896100160963 /* XCRemoteSwiftPackageReference "spline-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 66EDBF6A2D45615500160963 /* Products */;
 			projectDirPath = "";
@@ -254,6 +263,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"HackTAMU25App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -264,6 +274,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ahadjawaid.HackTAMU25App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -282,6 +293,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"HackTAMU25App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSDownloadsFolderUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -292,6 +304,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ahadjawaid.HackTAMU25App;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -322,6 +335,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		66EDC0E12D46896100160963 /* XCRemoteSwiftPackageReference "spline-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/splinetool/spline-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		66EDC0E22D46896100160963 /* SplineRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66EDC0E12D46896100160963 /* XCRemoteSwiftPackageReference "spline-ios" */;
+			productName = SplineRuntime;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 66EDBF612D45615500160963 /* Project object */;
 }

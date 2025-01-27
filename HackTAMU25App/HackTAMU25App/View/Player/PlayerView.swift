@@ -308,5 +308,5 @@ func generateSong(prompt: String) async throws -> [String: Any] {
 }
 
 #Preview {
-    PlayerView(topic: SampleData.shared.topics[0])
+    PlayerView(topic: SampleData.shared.topics.filter({$0.audioURL != nil})[0])
 }

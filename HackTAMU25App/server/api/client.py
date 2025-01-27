@@ -6,6 +6,13 @@ import logging
 import json
 from pathlib import Path
 from datetime import datetime
+from aws import upload_file_to_s3
+import m3u8
+import uuid
+import requests
+import time
+import subprocess
+import uuid
 
 from .suno_api import suno_api_instance, logger
 
@@ -108,32 +115,110 @@ def poll_clip(clip_id: str, max_attempts=20, wait_time=5):
     print(f"Timed out waiting for clip {clip_id} to have audio.")
     return None
 
+def get_unique_string():
+    return str(uuid.uuid4())
+
 
 def download_audio_files(audio_urls, output_dir="downloaded_audio"):
     """
-    Given a list of 'audio_urls', downloads each as .mp4 into 'output_dir'.
-    Returns a list of local file paths.
+    1) Download each .mp4 audio from 'audio_urls'.
+    2) Convert to HLS .m3u8 using ffmpeg.
+    3) Upload .m3u8 + segments to S3.
+    4) Return a list of final .m3u8 S3 URLs for playback.
     """
     os.makedirs(output_dir, exist_ok=True)
-    saved_paths = []
+    final_m3u8_urls = []
 
     for i, url in enumerate(audio_urls, start=1):
-        filename = f"song_{i}.mp4"  # or detect extension from headers
-        filepath = os.path.join(output_dir, filename)
+        # Step A: Download the .mp4 file
+        local_mp4 = os.path.join(output_dir, f"song_{i}.mp4")
+        print(f"Downloading {url} -> {local_mp4}")
+        with requests.get(url, stream=True) as resp:
+            resp.raise_for_status()
+            with open(local_mp4, "wb") as f:
+                for chunk in resp.iter_content(8192):
+                    if chunk:
+                        f.write(chunk)
+        print(f"Saved: {local_mp4}")
 
-        print(f"Downloading {url} -> {filepath}")
-        resp = requests.get(url, stream=True)
-        resp.raise_for_status()
+        # Step B: Convert to HLS .m3u8 + .ts segments via ffmpeg
+        # Put HLS output in a subfolder so each file is isolated
+        hls_folder = os.path.join(output_dir, f"hls_{i}")
+        os.makedirs(hls_folder, exist_ok=True)
 
-        with open(filepath, "wb") as f:
-            for chunk in resp.iter_content(8192):
-                if chunk:
-                    f.write(chunk)
+        hls_playlist = os.path.join(hls_folder, "playlist.m3u8")
+        # Example ffmpeg command:
+        #   ffmpeg -y -i input.mp4 -c:a aac -b:a 128k -ac 2 -hls_list_size 0 -hls_time 4 -f hls playlist.m3u8
+        cmd = [
+            "ffmpeg",
+            "-y",
+            "-i", local_mp4,
+            "-c:a", "aac",
+            "-b:a", "128k",
+            "-ac", "2",
+            "-hls_list_size", "0",   # full VOD playlist
+            "-hls_time", "4",
+            "-f", "hls",
+            hls_playlist
+        ]
+        subprocess.run(cmd, check=True)
+        print(f"Created HLS in {hls_folder}")
 
-        print(f"Saved: {filepath}")
-        saved_paths.append(filepath)
+        # Step C: Upload .m3u8 + .ts segments to S3, rewriting the local .m3u8 to use S3 URLs
+        final_url = upload_m3u8_and_segments_to_s3(hls_playlist)
+        final_m3u8_urls.append(final_url)
+        print(f"HLS URL -> {final_url}")
 
-    return saved_paths
+    return final_m3u8_urls
+
+
+def upload_m3u8_and_segments_to_s3(m3u8_path, bucket_name="brainbeats1"):
+    """
+    1) Parse .m3u8, find any .ts (or .aac) segment references.
+    2) Upload each segment to S3 with a unique key.
+    3) Rewrite lines in .m3u8 to point to the S3 segment URLs.
+    4) Upload the final .m3u8 to S3 and return its URL.
+    """
+    import re
+
+    folder = os.path.dirname(m3u8_path)
+    with open(m3u8_path, "r") as f:
+        lines = f.readlines()
+
+    segment_pattern = re.compile(r'^(?!#)(.*\.(ts|aac|m4s|mp4))$', re.IGNORECASE)
+    s3_urls_map = {}  # local segment filename -> S3 URL
+
+    # 1) For each segment reference line, upload to S3
+    for i, line in enumerate(lines):
+        seg_match = segment_pattern.match(line.strip())
+        if seg_match:
+            seg_name = seg_match.group(1)  # e.g. "playlist0.ts"
+            local_seg_path = os.path.join(folder, seg_name)
+            # Upload to S3
+            s3_key = f"{get_unique_string()}/{seg_name}"
+            s3_url = upload_file_to_s3(bucket_name, local_seg_path, s3_key)
+            s3_urls_map[seg_name] = s3_url
+
+    # 2) Rewrite lines in memory
+    new_lines = []
+    for line in lines:
+        seg_match = segment_pattern.match(line.strip())
+        if seg_match:
+            seg_name = seg_match.group(1)
+            new_lines.append(s3_urls_map[seg_name] + "\n")
+        else:
+            new_lines.append(line)
+
+    # 3) Write out a "remote" .m3u8 that references S3 segments
+    final_m3u8_path = os.path.join(folder, "playlist_remote.m3u8")
+    with open(final_m3u8_path, "w") as out:
+        out.writelines(new_lines)
+
+    # 4) Upload that new .m3u8 to S3
+    final_m3u8_key = f"{get_unique_string()}/playlist.m3u8"
+    final_s3_m3u8_url = upload_file_to_s3(bucket_name, final_m3u8_path, final_m3u8_key)
+
+    return final_s3_m3u8_url
 
 
 def save_response_to_file(data, filename: str):
